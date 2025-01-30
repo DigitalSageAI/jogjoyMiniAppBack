@@ -38,6 +38,7 @@ app.use(cors({
   credentials: true, // Если нужны куки или авторизация
 }));
 
+app.options('*', cors()); 
 
 app.use(express.json());
 
