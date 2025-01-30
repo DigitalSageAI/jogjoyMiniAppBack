@@ -33,7 +33,7 @@ mongoose.connect('mongodb+srv://jogjoyinfo:20060903@cluster0.3s2e0.mongodb.net/?
 const app = express();
 
 app.use(cors({
-  origin: 'https://jogjoy.vercel.app', // Укажите домен вашего фронтенда
+  origin: '*', // Укажите домен вашего фронтенда
   methods: ['GET','PATCH', 'POST', 'PUT', 'DELETE'],
   credentials: true, // Если нужны куки или авторизация
 }));
