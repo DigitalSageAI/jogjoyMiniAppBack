@@ -8,6 +8,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import mongoose from 'mongoose';
 import OpenAI from 'openai';
 
+
 const bucketName = process.env.BUCKET_NAME;
 const bucketRegion = process.env.BUCKET_REGION;
 const accessKey = process.env.ACCESS_KEY;
@@ -253,9 +254,8 @@ export const saveAnalysis = async (req, res) => {
 };
 
 export const generatePrompt = async (req, res) => {
-  const { prompt } = req.body;
+  const { prompt } = req.body;  
   const openai = new OpenAI({
-    // apiKey: process.env.OPENAI,
     apiKey: process.env.OPENAI,
   });
   try {
