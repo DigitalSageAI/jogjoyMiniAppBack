@@ -69,6 +69,7 @@ app.post('/generate', UserController.generatePrompt)
 app.post('/saveTraining', UserController.saveTrainingPlan)
 app.get('/getUserById/:id', UserController.getUser)
 app.post('/uploadPhoto/:id', upload.single('photo'), UserController.uploadPhoto)
+app.post('/saveName', UserController.changeUserName)
 
 
 // Orders

@@ -16,7 +16,7 @@ const bucketRegion = process.env.BUCKET_REGION;
 const accessKey = process.env.ACCESS_KEY;
 const secretAccessKey = process.env.SECRET_ACCESS_KEY;
 
-
+console.log(bucketName, bucketRegion, accessKey, secretAccessKey)
 
 
 const s3 = new S3Client({
@@ -111,6 +111,7 @@ export const login = async (req, res) => {
 
 export const getTelegramId = async (req, res) => {
   const initData = req.body.initData;
+  console.log(req.body.initData)
   const botToken = '7661158481:AAFc3G5gOameDLtudD8X_tX6IEsyoXKBlOc'; // Укажите токен вашего бота
 
   if (!initData || !botToken) {
@@ -118,17 +119,7 @@ export const getTelegramId = async (req, res) => {
   }
 
   try {
-    const urlParams = new URLSearchParams(initData);
-    const signature = urlParams.get('signature');
-    urlParams.delete('signature'); 
-
-    const userParam = urlParams.get('user');
-    if (!userParam) {
-      return res.status(400).json({ error: 'Параметр user отсутствует!' });
-    }
-
-    const user = JSON.parse(userParam);
-    let existingUser = await User.findOne({ telegramId: user.id });
+    let existingUser = await User.findOne({ telegramId: initData });
 
     if (existingUser) {
       return res.json({ status: 'Пользователь с таким Telegram ID уже существует.', user: existingUser });
@@ -136,7 +127,7 @@ export const getTelegramId = async (req, res) => {
 
     // Создаем нового пользователя, если не найден
     const newUser = new User({
-      telegramId: user.id
+      telegramId: initData
     });
 
     await newUser.save();
@@ -298,3 +289,26 @@ export const saveTrainingPlan = async (req, res) => {
   }
 };
 
+export const changeUserName = async (req, res) => {
+  try {
+    const { name, userId } = req.body;
+
+    if(!name){
+      return res.status(400).json({ message: 'Необходимо указать name' });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'Пользователь не найден' });
+    }
+
+    user.name = name;
+    await user.save();
+    return res.status(200).json({ message: 'План тренировок успешно сохранен', user });
+
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Не удалось сохранить имя' });
+  }
+}
