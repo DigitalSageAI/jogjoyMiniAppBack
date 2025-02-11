@@ -147,19 +147,31 @@ export const getTelegramId = async (req, res) => {
 
 export const getSubscribe = async (req, res) => {
   try {
+    const { type, val } = req.body;
     const user = await User.findOne({ _id: req.body.id });
-    if (user) {
-      user.subscribe = true;
-      await user.save();
-      return res.status(200).json({ message: 'Подписка успешно оформлена', user });
-    } else {
+
+    if (!user) {
       return res.status(404).json({ message: 'Пользователь не найден' });
     }
+
+
+    if (Array.isArray(type)) {
+      type.forEach((t) => {
+        user[t] = val;
+      });
+    } else {
+      user[type] = val;
+    }
+
+    await user.save();
+    return res.status(200).json({ message: 'Подписка успешно оформлена', user });
+
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Не удалось оформить подписку' });
   }
 };
+
 
 
 export const getUser = async (req, res) => {

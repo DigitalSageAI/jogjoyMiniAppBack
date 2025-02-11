@@ -17,7 +17,23 @@ const UserSchema = new mongoose.Schema({
     trainingPlan: {
         type: Array,
         default: []
-    }
+    },
+    sub1: {
+        type: Boolean, 
+        default: false
+    },
+    sub2: {
+        type: Boolean, 
+        default: false
+    },
+    sub3: {
+        type: Boolean, 
+        default: false
+    },
+    sub4: {
+        type: Boolean, 
+        default: false
+    },
 }, {
     timestamps: true,
 });
