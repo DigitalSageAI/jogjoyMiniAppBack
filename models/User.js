@@ -34,6 +34,10 @@ const UserSchema = new mongoose.Schema({
         type: Boolean, 
         default: false
     },
+    completedTrainings: {
+        type: [String],
+        default: []
+    }
 }, {
     timestamps: true,
 });

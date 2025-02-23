@@ -85,6 +85,15 @@ export const login = async (req, res) => {
     }
   };
 
+  export const getUsers = async (req, res) => {
+    const users = await User.find();
+    if(users){
+      res.json(users)
+    }else{
+      res.status(404).json({ message: "error" })
+    }
+  }
+
 
 
 // export const updateUserInfo = async (req, res) => {
@@ -324,3 +333,31 @@ export const changeUserName = async (req, res) => {
     return res.status(500).json({ message: 'Не удалось сохранить имя' });
   }
 }
+
+
+export const addCompletedTrainingDay = async (req, res) => {
+  try {
+    const { userId, trainingDay } = req.body;
+
+    if (!userId || trainingDay === undefined) {
+      return res.status(400).json({ message: "Необходимо указать userId и trainingDay" });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "Пользователь не найден" });
+    }
+
+    // Проверяем, если этот день уже добавлен, чтобы избежать дублирования
+    if (!user.completedTrainings.includes(trainingDay)) {
+      user.completedTrainings.push(trainingDay);
+      await user.save();
+    }
+
+    return res.status(200).json({ message: "День тренировки успешно добавлен", user });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Не удалось добавить день тренировки" });
+  }
+};

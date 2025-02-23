@@ -70,6 +70,8 @@ app.post('/saveTraining', UserController.saveTrainingPlan)
 app.get('/getUserById/:id', UserController.getUser)
 app.post('/uploadPhoto/:id', upload.single('photo'), UserController.uploadPhoto)
 app.post('/saveName', UserController.changeUserName)
+app.get('/getUsers', UserController.getUsers)
+app.post('/addCompletedTrainingDay', UserController.addCompletedTrainingDay)
 
 
 // Orders
