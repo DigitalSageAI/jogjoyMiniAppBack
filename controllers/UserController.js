@@ -120,6 +120,9 @@ export const login = async (req, res) => {
 
 export const getTelegramId = async (req, res) => {
   const initData = req.body.initData;
+  const img = req.body.img
+  const name = req.body.name
+
   console.log(req.body.initData)
   const botToken = '7661158481:AAFc3G5gOameDLtudD8X_tX6IEsyoXKBlOc'; // Укажите токен вашего бота
 
@@ -136,7 +139,9 @@ export const getTelegramId = async (req, res) => {
 
     // Создаем нового пользователя, если не найден
     const newUser = new User({
-      telegramId: initData
+      telegramId: initData,
+      avatar: img,
+      name
     });
 
     await newUser.save();
@@ -188,7 +193,8 @@ export const getUser = async (req, res) => {
     const user = await User.findOne({ _id: req.params.id });
 
     if (user) {
-      if (user.avatar) {
+      
+      if (user.avatar && user.avatar.slice(0, 12) != "https://t.me") {
         // Генерируем временную ссылку для доступа к аватару
         const getObjectParams = {
           Bucket: bucketName,
