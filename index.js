@@ -10,6 +10,7 @@ import cors from 'cors'
 
 
 import * as UserController from './controllers/UserController.js'
+import PromoController from "./controllers/PromoController.js";
 
 
 
@@ -72,6 +73,13 @@ app.post('/uploadPhoto/:id', upload.single('photo'), UserController.uploadPhoto)
 app.post('/saveName', UserController.changeUserName)
 app.get('/getUsers', UserController.getUsers)
 app.post('/addCompletedTrainingDay', UserController.addCompletedTrainingDay)
+
+app.post('/promo', PromoController.create); // Создать промокод
+app.put('/promo/:id', PromoController.update); // Обновить промокод
+app.delete('/promo/:id', PromoController.delete); // Удалить промокод
+app.get('/promo', PromoController.getAll); // Получить все промокоды
+
+
 
 
 // Orders
