@@ -35,8 +35,8 @@ const app = express();
 
 app.use(cors({
   origin: '*', // Укажите домен вашего фронтенда
-  methods: ['GET','PATCH', 'POST', 'PUT', 'DELETE'],
-  credentials: true, // Если нужны куки или авторизация
+  methods: ['GET','PATCH', 'POST', 'PUT', 'DELETE'] //,
+  //credentials: true, // Если нужны куки или авторизация
 }));
 
 app.options('*', cors()); 
