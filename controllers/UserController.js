@@ -124,7 +124,7 @@ export const getTelegramId = async (req, res) => {
   const name = req.body.name
 
   console.log(req.body.initData)
-  const botToken = '7661158481:AAFc3G5gOameDLtudD8X_tX6IEsyoXKBlOc'; // Укажите токен вашего бота
+  const botToken = '7190673058:AAF5nxIW7BCVY4zAYa73cw6ZPie9MJqRbdY'; // Укажите токен вашего бота
 
   if (!initData || !botToken) {
     return res.status(400).json({ error: 'initData или токен не предоставлены' });
